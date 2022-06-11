@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.gis',
+
+    'geolocation.apps.pins.apps.PinsConfig'
 ]
 
 MIDDLEWARE = [
