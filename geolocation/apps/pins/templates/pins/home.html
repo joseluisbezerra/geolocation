@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
+{% load leaflet_tags %}
 
 {% block title %}Geolocation{% endblock %}
 
+{% block javascript %}
+    <script>
+        function map_init (map, options) {
+            L.marker([50.5, 30.5]).addTo(map)
+                .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                .openPopup();
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
+    <h1>Geolocation</h1>
+    {% leaflet_map "map" callback="window.map_init" %}
 {% endblock %}

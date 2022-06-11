@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.gis',
+    'leaflet',
 
     'geolocation.apps.pins.apps.PinsConfig'
 ]
