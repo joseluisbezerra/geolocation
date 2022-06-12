@@ -17,10 +17,35 @@
                 .then(function(data) {
                     for (var i = 0; i < data.length; i++){
                         var pin = data[i];
-                        var pin_location = JSON.parse(pin.pin_location)
+                        
+                        var content = document.createElement("div");
+                        content.className = "pin";
+
+                        var paragraph = document.createElement("p");
+
+                        var title = document.createElement("strong");
+                        title.innerHTML = `${pin.name}`;
+
+                        paragraph.appendChild(title);
+
+                        var description = document.createElement("em");
+                        description.innerHTML = `Expiration date: ${pin.expiration_date}`;
+
+                        paragraph.appendChild(description);
+
+                        content.appendChild(paragraph);
+
+                        var button_delete = document.createElement("a");
+                        button_delete.innerHTML = "Delete pin";
+                        button_delete.className = "btn btn-danger btn-sm";
+                        button_delete.href = `{% url "delete_pin" id=1 %}`.replace('1', pin.id);
+
+                        content.appendChild(button_delete)
+
+                        var pin_location = JSON.parse(pin.pin_location);
 
                         L.marker(pin_location.coordinates.reverse()).addTo(map)
-                            .bindPopup(pin.name)
+                            .bindPopup(content)
                             .openPopup();
                     }
                 });
@@ -29,6 +54,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Shops</h1>
+    <h1>Pins</h1>
+
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <li {% if message.tags %}class='alert alert-{{ message.tags }}'{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+
     {% leaflet_map "map" %}
 {% endblock %}
