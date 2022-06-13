@@ -46,13 +46,40 @@ def new_pin(request):
 
             return redirect(reverse('home'))
         else:
-            messages.warning(request, form.errors)
+            messages.error(request, form.errors)
 
             return redirect(reverse('new_pin'))
     else:
         form = PinForm()
 
         return render(request, 'pins/add_pin.html', {'form': form})
+
+
+def edit_pin(request, id):
+    pin = get_object_or_404(Pin, pk=id)
+
+    if (request.method == 'POST'):
+        form = PinForm(request.POST, instance=pin)
+
+        if (form.is_valid()):
+            form.save()
+            messages.success(request, 'Pin edited successfully.')
+
+            return redirect(reverse('home'))
+        else:
+            return render(
+                request,
+                'pins/edit_pin.html',
+                {'form': form, 'pin': pin}
+            )
+    else:
+        form = PinForm(instance=pin)
+
+        return render(
+            request,
+            'pins/edit_pin.html',
+            {'form': form, 'pin': pin}
+        )
 
 
 def delete_pin(request, id):

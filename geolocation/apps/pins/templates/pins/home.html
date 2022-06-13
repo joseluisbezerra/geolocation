@@ -35,12 +35,19 @@
 
                         content.appendChild(paragraph);
 
-                        var button_delete = document.createElement("a");
-                        button_delete.innerHTML = "Delete pin";
-                        button_delete.className = "btn btn-danger btn-sm";
-                        button_delete.href = `{% url "delete_pin" id=1 %}`.replace('1', pin.id);
+                        var edit_button = document.createElement("a");
+                        edit_button.innerHTML = "Edit pin";
+                        edit_button.className = "btn btn-warning btn-sm btn-space";
+                        edit_button.href = `{% url "edit_pin" id=1 %}`.replace('1', pin.id);
 
-                        content.appendChild(button_delete)
+                        content.appendChild(edit_button)
+
+                        var delete_button = document.createElement("a");
+                        delete_button.innerHTML = "Delete pin";
+                        delete_button.className = "btn btn-danger btn-sm";
+                        delete_button.href = `{% url "delete_pin" id=1 %}`.replace('1', pin.id);
+
+                        content.appendChild(delete_button)
 
                         var pin_location = JSON.parse(pin.pin_location);
 
