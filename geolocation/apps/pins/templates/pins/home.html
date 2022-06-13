@@ -11,8 +11,8 @@
             var map = event.detail.map;
 
             fetch(pins_url)
-                .then(function(resp) {
-                    return resp.json();
+                .then(function(response) {
+                    return response.json();
                 })
                 .then(function(data) {
                     for (var i = 0; i < data.length; i++){
@@ -56,13 +56,12 @@
 {% block content %}
     <h1>Pins</h1>
 
-    {% if messages %}
-      <ul class="messages">
-          {% for message in messages %}
-              <li {% if message.tags %}class='alert alert-{{ message.tags }}'{% endif %}>{{ message }}</li>
-          {% endfor %}
-      </ul>
-    {% endif %}
-
     {% leaflet_map "map" %}
+
+    <div class="d-grid gap-2">
+        <a href='{% url "new_pin" %}' class="btn btn-primary mt-3">
+            Create Pin
+        </a>
+    </div>
+
 {% endblock %}

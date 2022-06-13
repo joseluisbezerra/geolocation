@@ -6,6 +6,6 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('pins/', views.pins_list, name='pins_list'),
-
-    path('delete/<int:id>/', views.delete_pin, name='delete_pin')
+    path('pins/new/', views.new_pin, name='new_pin'),
+    path('pins/<int:id>/delete/', views.delete_pin, name='delete_pin')
 ]

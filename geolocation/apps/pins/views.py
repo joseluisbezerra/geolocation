@@ -3,11 +3,13 @@ from datetime import date
 from django.contrib.gis.db.models.functions import AsGeoJSON
 from django.http import JsonResponse
 from django.contrib import messages
+from django.urls import reverse
 from django.shortcuts import (
     render,
     get_object_or_404,
     redirect
 )
+from geolocation.apps.pins.forms import PinForm
 
 from geolocation.apps.pins.models import Pin
 
@@ -33,6 +35,26 @@ def pins_list(request):
     return JsonResponse(pins, safe=False)
 
 
+def new_pin(request):
+    if (request.method == 'POST'):
+        form = PinForm(request.POST)
+
+        if (form.is_valid()):
+            form.save()
+
+            messages.success(request, 'Pin added successfully')
+
+            return redirect(reverse('home'))
+        else:
+            messages.warning(request, form.errors)
+
+            return redirect(reverse('new_pin'))
+    else:
+        form = PinForm()
+
+        return render(request, 'pins/add_pin.html', {'form': form})
+
+
 def delete_pin(request, id):
     pin = get_object_or_404(Pin, pk=id)
 
@@ -40,4 +62,4 @@ def delete_pin(request, id):
 
     messages.success(request, 'Successfully deleted pin')
 
-    return redirect('/')
+    return redirect(reverse('home'))

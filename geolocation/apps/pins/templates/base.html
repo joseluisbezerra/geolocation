@@ -38,7 +38,15 @@
             margin-top: 5px;
             color: white;
         }
+
+        #id_location_div_map {
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
+
+    {% block extra_head %}
+    {% endblock %}
 </head>
 <body>
     <div class="container">
@@ -48,6 +56,14 @@
                 <span class="fs-5"><i class="bi bi-map-fill"></i> GeoLocation</span>
             </a>
         </header>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <section>
             {% block content %}
